@@ -1,75 +1,58 @@
 const serverless = require('serverless-http');
 const express = require('express');
 const app = express();
+app.use(express.json());
+
+const databaseService = require('./databaseservice');
 
 app.get('/tasks', function (request, response) {
 
-  const username = request.query.username;
+  databaseService.gettasks()
+  .then(function(results){
+//working ok
+response.json(results);
 
-  const ListOfTasks= [ 
-      {
-          id:1,
-          description:"Feed the Cat",
-          completed:false
-      
-      },
-
-      {
-          id:2,
-          description:"Buy Milk",
-          completed:false    
-      },
-      {
-          id:3,
-          description:"Pay Window Cleaner",
-          completed:false
-      },
-      {
-          id:4,
-          description:"Book Tickets",
-          completed:false
-      },
-      {
-          id:5,
-          description: "Learn JS",
-          completed: false
-      }
-  
-    ];
-
-  response.json(ListOfTasks);
 })
+
+.catch (function(error){
+    //something went wrong when getting the task
+    response.status(500); 
+    response.json(error);
+});
+  
+ })
+
 app.delete('/tasks/:taskId', function (request, response){
 
-const taskIdToBeDeleted = request.params.taskId;
+const deleteTaskId = request.params.TasksId;
+databaseService.deleteTask(deleteTaskId).then(function(results){
 
-let someResponse ={
+    response.json(results);
 
-    message: "You issued a delete request for ID : " + taskIdToBeDeleted
-};
-if(taskIdToBeDeleted > 5) {
-  response.status(404);
-  someResponse= {
-    message :"The task ID " + taskIdToBeDeleted + " does not exist"
-};
+})
+     .catch(function(error){
+        response.status(500);
+        response. json(error);
 
-}
+    });
 
-response.json(someResponse);
+
 });
 
 
-app.post('/tasks', function (request, response){
+app.post('/tasks', function (request,response){
 
-    const taskToBePosted = request.params.tasks;
-    
-    let someResponse ={
-    
-        message: "You issued a post request "
-    
-}
+    const taskDescription =request.body.taskDescription;
+    databaseService.saveTask(taskDescription).then(function(results){
 
-response.json(someResponse);
+        response.json(results);
+    })
+    
+    .catch (function(error){
+        response.status(500);
+        response. json(error);
+    });
+
 
 });
 
