@@ -30,18 +30,19 @@ function gettasks() {
 
 
 function saveTask(taskDescription) {
-        const connection = getDatabaseConnection();
+    const connection = getDatabaseConnection();
     return new Promise(function(resolve, reject) {
         
         
         const postData ={
             Description:taskDescription,
-            Completed:"false",
-            userId:"2"
+            Completed:false,
+            userId:2
         };
         
         
         connection.query ("INSERT INTO Tasks SET ? ", postData, function(error,results){
+           
             if (error) {
                 connection.destroy();
                 return reject(error);
@@ -55,13 +56,18 @@ function saveTask(taskDescription) {
 };
 
 
-
-function deleteTask(TasksId) {
+//DELETE -me 
+function deleteTask(taskId) {
     const connection = getDatabaseConnection();
     return new Promise(function(resolve, reject) {
         
+        const deleteId = {
+            TasksId:taskId
+        }
+    // Does this even need to be assigned to a variable? it needs to be TasksId, 
+    //as this is what it is in the table column.  
 
-    connection.query("DELETE FROM Tasks WHERE TasksId === TasksId"),TasksId, function(error,results){
+    connection.query('DELETE FROM Tasks WHERE TasksId = ?',deleteId, function(error,results){
             if (error) {
                 connection.destroy();
                 return reject(error);
@@ -70,16 +76,41 @@ function deleteTask(TasksId) {
                 connection.end();
                 return resolve(results);
             }
-        };
+        });
     })
 }
 
 
 
+//PUT/Update- me
+function updateTask(taskId) {
+    const connection = getDatabaseConnection();
+    return new Promise(function(resolve, reject) {
+        //wrap all in a promise 
+        
+        const updateTaskId ={
+            TasksId:taskId,
+        //? does this need declaring? 
+         };
+    
+         connection.query("UPDATE Tasks SET Completed=True WHERE TasksId= ? ",updateTaskId, function(error,results){
+           // Updates to true if TasksId matches the TasksId entered. 
 
+            if (error) {
+                connection.destroy();
+                return reject(error);
+            } 
+            else {
+                connection.end();
+                return resolve(results);
+            }
+        });
+    })
+}
 
 module.exports= {
     gettasks,
     saveTask,
-    deleteTask
+    deleteTask,
+    updateTask
 }
