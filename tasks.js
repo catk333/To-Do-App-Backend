@@ -1,3 +1,4 @@
+
 const serverless = require('serverless-http');
 const express = require('express');
 const app = express();
@@ -28,14 +29,18 @@ response.json(results);
 
 
 
- //DELETE-me 
+ 
+//DELETE-me 
+
 app.delete('/tasks/:taskId', function (request, response){
 // above is a pathway only - doesn't need to match the database column?
 
 const deleteTaskId = request.params.TasksId;
 // a params.TasksID , then this passed into the deleteTask function
+
 databaseService.deleteTask(deleteTaskId)
 // wrap in a promise
+
 .then(function(results){
 
     response.json(results);

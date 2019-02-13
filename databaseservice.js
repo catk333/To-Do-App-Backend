@@ -1,3 +1,5 @@
+
+
 const mysql =require ("mysql");
 
 function getDatabaseConnection() {
@@ -94,7 +96,7 @@ function updateTask(taskId) {
          };
     
          connection.query("UPDATE Tasks SET Completed=True WHERE TasksId= ? ",updateTaskId, function(error,results){
-           // Updates to true if TasksId matches the TasksId entered. 
+           // Updates to true if TasksId matches the TasksId entered. Works in MySQl. 
 
             if (error) {
                 connection.destroy();
