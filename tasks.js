@@ -35,7 +35,7 @@ response.json(results);
 app.delete('/tasks/:taskId', function (request, response){
 // above is a pathway only - doesn't need to match the database column?
 
-const deleteTaskId = request.params.TasksId;
+const deleteTaskId = request.param.TasksId;
 // a params.TasksID , then this passed into the deleteTask function
 
 databaseService.deleteTask(deleteTaskId)
@@ -76,7 +76,7 @@ app.post('/tasks', function (request,response){
 //  PUT/Update- me
 app.put('/tasks/:taskId', function (request, response){
 
-    const taskToBeUpdated = request.params.TasksId;
+    const taskToBeUpdated = request.param.TasksId;
     // params.TaskId 
     databaseService.updateTask(taskToBeUpdated).then(function(results){
       //working ok
