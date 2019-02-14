@@ -14,13 +14,12 @@ app.get('/tasks', function (request, response) {
 
   databaseService.gettasks()
   .then(function(results){
-//working ok
-response.json(results);
+    response.json(results);
 
 })
 
 .catch (function(error){
-    //something went wrong when getting the task
+
     response.status(500); 
     response.json(error);
 });
@@ -33,33 +32,29 @@ response.json(results);
 //DELETE-me 
 
 app.delete('/tasks/:taskId', function (request, response){
-// above is a pathway only - doesn't need to match the database column?
 
-const deleteTaskId = request.param.TasksId;
-// a params.TasksID , then this passed into the deleteTask function
+const taskIdToBeDeleted = request.param.taskId;
 
-databaseService.deleteTask(deleteTaskId)
-// wrap in a promise
+ databaseService.deleteTask(taskIdToBeDeleted).then(function(results){
 
-.then(function(results){
-
-    response.json(results);
-    
+        response.json(results);
     })
     
-    .catch(function(error){
+    .catch (function(error){
         response.status(500);
         response. json(error);
     });
 
-})
+
+
+});
 
 
 //POST- SAVE - James' Code
 app.post('/tasks', function (request,response){
 
     const taskDescription =request.body.taskDescription;
-// get this from the body.taskDescription then pass down to below.
+
     databaseService.saveTask(taskDescription).then(function(results){
 
         response.json(results);
@@ -76,21 +71,18 @@ app.post('/tasks', function (request,response){
 //  PUT/Update- me
 app.put('/tasks/:taskId', function (request, response){
 
-    const taskToBeUpdated = request.param.TasksId;
-    // params.TaskId 
-    databaseService.updateTask(taskToBeUpdated).then(function(results){
-      //working ok
-      response.json(results);
-      
-      })
-      
-      .catch (function(error){
-          //something went wrong when getting the task
-          response.status(500); 
-          response.json(error);
-      });
-        
-       })
+    const taskIdToBeUpdated = request.param.taskId;
+    // params.taskId 
+    databaseService.updateTask(taskIdToBeUpdated).then(function(results){
+
+        response.json(results);
+    })
+    
+    .catch (function(error){
+        response.status(500);
+        response. json(error);
+    });
+
 
 
 module.exports.handler = serverless(app);

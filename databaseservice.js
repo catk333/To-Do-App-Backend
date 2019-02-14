@@ -55,21 +55,14 @@ function saveTask(taskDescription) {
             }
         });
     })
-};
+}
 
 
-//DELETE -me 
 function deleteTask(taskId) {
     const connection = getDatabaseConnection();
     return new Promise(function(resolve, reject) {
         
-        const deleteId = {
-            TasksId:taskId
-        }
-    // Does this even need to be assigned to a variable? it needs to be TasksId, 
-    //as this is what it is in the table column.  
-
-    connection.query('DELETE FROM Tasks WHERE TasksId = ?',deleteId, function(error,results){
+    connection.query('DELETE FROM Tasks WHERE TasksId = ?',[taskId], function(error,results){
             if (error) {
                 connection.destroy();
                 return reject(error);
@@ -83,19 +76,12 @@ function deleteTask(taskId) {
 }
 
 
-
-//PUT/Update- me
 function updateTask(taskId) {
     const connection = getDatabaseConnection();
     return new Promise(function(resolve, reject) {
         //wrap all in a promise 
         
-        const updateTaskId ={
-            TasksId:taskId,
-        //? does this need declaring? 
-         };
-    
-         connection.query("UPDATE Tasks SET Completed=True WHERE TasksId= ? ",updateTaskId, function(error,results){
+         connection.query("UPDATE Tasks SET Completed=True WHERE TasksId= ? ",[taskId], function(error,results){
            // Updates to true if TasksId matches the TasksId entered. Works in MySQl. 
 
             if (error) {
