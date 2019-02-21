@@ -11,7 +11,6 @@ const databaseService = require('./databaseservice');
 
 
 
-//GET- James 
 app.get('/tasks', function (request, response) {
 
   databaseService.gettasks()
@@ -30,10 +29,7 @@ app.get('/tasks', function (request, response) {
 
 
 
- 
-
-
-app.delete('/tasks/:taskId', function (request, response){
+ app.delete('/tasks/:taskId', function (request, response){
 
 const taskIdToBeDeleted = request.param.taskId;
 
@@ -46,8 +42,6 @@ const taskIdToBeDeleted = request.param.taskId;
         response.status(500);
         response. json(error);
     });
-
-
 
 });
 
@@ -69,7 +63,6 @@ app.post('/tasks', function (request,response){
 
 });
 
-//  PUT/Update- me
 app.put('/tasks/:taskId', function (request, response){
 
     const taskIdToBeUpdated = request.param.taskId;

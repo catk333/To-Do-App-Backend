@@ -20,15 +20,15 @@ function gettasks() {
                 return reject(error);
             } 
             else {
-                connection.end();
+                connection.end(function() { 
                 return resolve(results);
+       
+                });
             }
         });
     });
 }
     
-
-
 
 
 function saveTask(taskDescription) {
@@ -37,7 +37,7 @@ function saveTask(taskDescription) {
         
         
         const postData ={
-            Description:taskDescription,
+            taskDescription:taskDescription,
             Completed:false,
             userId:2
         };
@@ -50,8 +50,9 @@ function saveTask(taskDescription) {
                 return reject(error);
             } 
             else {
-                connection.end();
+                connection.end(function(){
                 return resolve(results);
+                });
             }
         });
     })
@@ -68,11 +69,12 @@ function deleteTask(taskId) {
                 return reject(error);
             } 
             else {
-                connection.end();
+                connection.end(function() {
                 return resolve(results);
+                 });
             }
         });
-    })
+    });
 }
 
 
@@ -89,11 +91,13 @@ function updateTask(taskId) {
                 return reject(error);
             } 
             else {
-                connection.end();
+                connection.end( function(){
                 return resolve(results);
+                });
             }
+    
         });
-    })
+    });
 }
 
 module.exports= {
