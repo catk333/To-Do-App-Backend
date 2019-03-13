@@ -1,5 +1,4 @@
 
-
 const mysql =require ("mysql");
 
 function getDatabaseConnection() {
@@ -25,21 +24,22 @@ function gettasks() {
        
                 });
             }
-        });
+        });ß
     });
 }
     
 
 
-function saveTask(taskDescription) {
+function saveTask(taskDescription)  {
     const connection = getDatabaseConnection();
+    
     return new Promise(function(resolve, reject) {
         
         
-        const postData ={
+        const postData = {
             taskDescription:taskDescription,
-            Completed:false,
-            userId:2
+            Completed: false,
+            userId: 1
         };
         
         

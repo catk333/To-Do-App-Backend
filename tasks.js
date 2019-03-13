@@ -1,16 +1,13 @@
-
 const serverless = require('serverless-http');
 const express = require('express');
 const app = express();
 const cors = require('cors');
-
 app.use(express.json());
 app.use(cors());
 const databaseService = require('./databaseservice');
 
 
-
-
+//works
 app.get('/tasks', function (request, response) {
 
   databaseService.gettasks()
@@ -29,9 +26,12 @@ app.get('/tasks', function (request, response) {
 
 
 
- app.delete('/tasks/:taskId', function (request, response){
+ 
 
-const taskIdToBeDeleted = request.param.taskId;
+// works
+app.delete('/tasks/:taskId', function (request, response){
+
+const taskIdToBeDeleted = request.params.taskId;
 
  databaseService.deleteTask(taskIdToBeDeleted).then(function(results){
 
@@ -42,6 +42,8 @@ const taskIdToBeDeleted = request.param.taskId;
         response.status(500);
         response. json(error);
     });
+
+
 
 });
 
@@ -63,9 +65,10 @@ app.post('/tasks', function (request,response){
 
 });
 
-app.put('/tasks/:taskId', function (request, response){
 
-    const taskIdToBeUpdated = request.param.taskId;
+app.put('/tasks/:tasksId', function (request, response){
+
+    const taskIdToBeUpdated = request.params.taskId;
     // params.taskId 
     databaseService.updateTask(taskIdToBeUpdated).then(function(results){
 
