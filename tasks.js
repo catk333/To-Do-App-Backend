@@ -66,10 +66,10 @@ app.post('/tasks', function (request,response){
 });
 
 
-app.put('/tasks/:tasksId', function (request, response){
+app.put('/tasks/:taskId', function (request, response){
 
     const taskIdToBeUpdated = request.params.taskId;
-    // params.taskId 
+  
     databaseService.updateTask(taskIdToBeUpdated).then(function(results){
 
         response.json(results);

@@ -24,7 +24,7 @@ function gettasks() {
        
                 });
             }
-        });ß
+        });
     });
 }
     
@@ -63,7 +63,7 @@ function deleteTask(taskId) {
     const connection = getDatabaseConnection();
     return new Promise(function(resolve, reject) {
         
-    connection.query('DELETE FROM Tasks WHERE TasksId = ?',[taskId], function(error,results){
+    connection.query('DELETE FROM Tasks WHERE taskId = ?',[taskId], function(error,results){
             if (error) {
                 connection.destroy();
                 return reject(error);
@@ -83,7 +83,7 @@ function updateTask(taskId) {
     return new Promise(function(resolve, reject) {
         //wrap all in a promise 
         
-         connection.query("UPDATE Tasks SET Completed=True WHERE TasksId= ? ",[taskId], function(error,results){
+         connection.query("UPDATE Tasks SET Completed=True WHERE taskId= ? ",[taskId], function(error,results){
            // Updates to true if TasksId matches the TasksId entered. Works in MySQl. 
 
             if (error) {
